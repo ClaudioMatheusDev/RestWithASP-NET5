@@ -1,3 +1,6 @@
+using RestWithASPNET.Services;
+using RestWithASPNET.Services.Implementations;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -8,6 +11,14 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
+
+void ConfigureServices(IServiceCollection services)
+{
+    services.AddControllers();
+
+    //Dependecy
+    services.AddScoped<IPersonService, PersonServiceImplementation>
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
@@ -23,3 +34,4 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
