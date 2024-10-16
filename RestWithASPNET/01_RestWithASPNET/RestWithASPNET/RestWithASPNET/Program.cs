@@ -10,15 +10,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddControllers();
+builder.Services.AddScoped<IPersonService, PersonServiceImplementation>();
+
 var app = builder.Build();
 
-void ConfigureServices(IServiceCollection services)
-{
-    services.AddControllers();
-
-    //Dependecy
-    services.AddScoped<IPersonService, PersonServiceImplementation>
-}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
