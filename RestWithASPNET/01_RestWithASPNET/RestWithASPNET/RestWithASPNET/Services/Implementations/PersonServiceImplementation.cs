@@ -14,7 +14,6 @@ namespace RestWithASPNET.Services.Implementations
 
         public List<Person> FindAll()
         {
-
             return _context.Persons.ToList();
         }//FIND ALL
 
