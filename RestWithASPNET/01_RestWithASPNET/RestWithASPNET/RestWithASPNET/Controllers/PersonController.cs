@@ -1,7 +1,8 @@
 using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
+using RestWithASPNET.Business;
 using RestWithASPNET.Model;
-using RestWithASPNET.Services;
+
 
 namespace RestWithASPNET.Controllers
 {
@@ -13,24 +14,24 @@ namespace RestWithASPNET.Controllers
 
         private readonly ILogger<PersonController> _logger;
 
-        private IPersonService _PersonService;
+        private IPersonBusiness _PersonBusiness;
 
-        public PersonController(ILogger<PersonController> logger, IPersonService personService)
+        public PersonController(ILogger<PersonController> logger, IPersonBusiness personService)
         {
             _logger = logger;
-            _PersonService = personService;
+            _PersonBusiness = personService;
         }
 
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_PersonService.FindAll());
+            return Ok(_PersonBusiness.FindAll());
         }
 
         [HttpGet("{id}")]
         public IActionResult Get(long id)
         {
-            var person = _PersonService.FindByID(id);
+            var person = _PersonBusiness.FindByID(id);
             if (person == null) return NotFound();
             return Ok(person);
         }
@@ -40,20 +41,20 @@ namespace RestWithASPNET.Controllers
         public IActionResult Post([FromBody] Person person)
         {
             if (person == null) return BadRequest();
-            return Ok(_PersonService.Create(person));
+            return Ok(_PersonBusiness.Create(person));
         }
 
         [HttpPut]
         public IActionResult Put([FromBody] Person person)
         {
             if (person == null) return BadRequest();
-            return Ok(_PersonService.Update(person));
+            return Ok(_PersonBusiness.Update(person));
         }
 
         [HttpDelete("{id}")]
         public IActionResult Delete(long id)
         {
-            _PersonService.Delete(id);
+            _PersonBusiness.Delete(id);
             return NoContent();
         }
 

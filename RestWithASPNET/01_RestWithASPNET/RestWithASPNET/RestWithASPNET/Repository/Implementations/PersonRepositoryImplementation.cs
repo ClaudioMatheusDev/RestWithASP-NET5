@@ -5,9 +5,9 @@ using RestWithASPNET.Model.Context;
 using System;
 using System.Diagnostics;
 
-namespace RestWithASPNET.Services.Implementations
+namespace RestWithASPNET.Repository.Implementations
 {
-    public class PersonServiceImplementation : IPersonService
+    public class PersonRepositoryImplementation : IPersonRepository
     {
         private MySQLContext _context;
 
@@ -22,7 +22,7 @@ namespace RestWithASPNET.Services.Implementations
             return _context.Persons.SingleOrDefault(p => p.Id.Equals(id));
         }//FIND BY ID
 
-        public PersonServiceImplementation(MySQLContext context)
+        public PersonRepositoryImplementation(MySQLContext context)
         {
             _context = context;
         }
@@ -34,7 +34,7 @@ namespace RestWithASPNET.Services.Implementations
                 _context.Add(person);
                 _context.SaveChanges();
             }
-            catch (Exception ex)
+            catch (Exception)
             {
 
                 throw;
@@ -53,7 +53,7 @@ namespace RestWithASPNET.Services.Implementations
                     _context.Persons.Remove(result);
                     _context.SaveChanges();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
 
                     throw;
@@ -76,7 +76,7 @@ namespace RestWithASPNET.Services.Implementations
                     _context.Entry(result).CurrentValues.SetValues(person);
                     _context.SaveChanges();
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
 
                     throw;
@@ -86,7 +86,7 @@ namespace RestWithASPNET.Services.Implementations
             return person;
         }// UPDATE
 
-        private bool Exists(long id)
+        public bool Exists(long id)
         {
             return _context.Persons.Any(p => p.Id.Equals(id));
         }
